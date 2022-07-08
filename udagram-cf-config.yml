@@ -288,15 +288,14 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash
           apt-get update -y
-          apt-get install unzip awscli -y
+          apt-get install awscli -y
           apt-get install apache2 -y
           systemctl start apache2
           cd /var/www/html
-          aws s3 cp s3://udaproj2-nyaa-udagram/sample.html
-          mv sample.html index.html
+          aws s3 cp s3://udaproj2-nyaa-udagram/sample.html index.html
+          systemctl restart apache2
       ImageId: !Ref MachineImage
-      KeyName: udac2l1e15
-      #IamInstanceProfile: !Ref ProfileWithRolesForOurApp
+      IamInstanceProfile: !Ref ProfileWithRolesForOurApp
       SecurityGroups:
         - Ref: WebServerSecGroup
       InstanceType: t3.medium
